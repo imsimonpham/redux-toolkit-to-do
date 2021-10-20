@@ -1,24 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+import { RootState } from "./app/store";
+import TaskCard from "./components/TaskCard";
+import { addTodo } from "./features/todoSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todos.value);
+  const [todoInput, setTodoInput] = useState("");
+
+  const handleTodos = () => {
+    if (todoInput !== "") {
+      dispatch(addTodo(todoInput));
+    }
+    setTodoInput("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To-do List</h1>
+      <div className="input-container">
+        <input
+          type="text"
+          value={todoInput}
+          onChange={(e) => {
+            setTodoInput(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleTodos();
+            }
+          }}
+        />
+        <button className="add" onClick={handleTodos}>
+          Add
+        </button>
+      </div>
+
+      <div className="output-container">
+        {todos.map((todo, index) => {
+          return <TaskCard task={todo} index={index} key={index} />;
+        })}
+      </div>
     </div>
   );
 }
