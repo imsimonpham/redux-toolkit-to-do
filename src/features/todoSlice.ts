@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 
 interface TodoState {
   value: string[];
@@ -15,6 +16,7 @@ export const todoSlice = createSlice({
     addTodo: (state, action: PayloadAction<string>) => {
       state.value.push(action.payload);
     },
+
     removeTodo: (state, action: PayloadAction<number>) => {
       state.value.splice(action.payload, 1);
     },

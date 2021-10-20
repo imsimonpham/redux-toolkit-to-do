@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { RootState } from "./app/store";
@@ -39,7 +39,7 @@ function App() {
       </div>
 
       <div className="output-container">
-        {todos.map((todo, index) => {
+        {todos.map((todo: string, index) => {
           return <TaskCard task={todo} index={index} key={index} />;
         })}
       </div>
